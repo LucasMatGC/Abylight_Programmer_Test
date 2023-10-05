@@ -8,12 +8,14 @@ public class FlowManager : MonoBehaviour
 {
 
     //Singleton reference to the FlowManager
-    private static FlowManager _flowManager;
+    public static FlowManager _flowManager;
+
+    public string _nextScene = "";
 
     /// <summary>
-    /// Start.
+    /// OnEnable.
     /// </summary>
-    void Start()
+    private void OnEnable()
     {
 
         if (_flowManager != null && _flowManager != this)
@@ -33,7 +35,8 @@ public class FlowManager : MonoBehaviour
     public void GotoInit()
     {
 
-        SceneManager.LoadScene(Constants.InitScene);
+        _nextScene = Constants.InitScene;
+        SceneManager.LoadScene(Constants.LoadingScreenScene);
 
     }
 
@@ -43,7 +46,8 @@ public class FlowManager : MonoBehaviour
     public void GotoMenu()
     {
 
-        SceneManager.LoadScene(Constants.MenuScene);
+        _nextScene = Constants.MenuScene;
+        SceneManager.LoadScene(Constants.LoadingScreenScene);
 
     }
 
@@ -53,7 +57,8 @@ public class FlowManager : MonoBehaviour
     public void GotoGame()
     {
 
-        SceneManager.LoadScene(Constants.GameScene);
+        _nextScene = Constants.GameScene;
+        SceneManager.LoadScene(Constants.LoadingScreenScene);
 
     }
 }
