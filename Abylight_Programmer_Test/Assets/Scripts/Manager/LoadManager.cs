@@ -14,7 +14,9 @@ public class LoadManager : MonoBehaviour
 
     private float _targetFill;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start. Calls the async load of the next scene
+    /// </summary>
     void Start()
     {
 
@@ -24,12 +26,18 @@ public class LoadManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Calls the garbage collector (first the unity GB, then the system GB once the level is loaded
+    /// </summary>
     private void OnLevelWasLoaded()
     {
         Resources.UnloadUnusedAssets();
         System.GC.Collect();
     }
 
+    /// <summary>
+    /// Loads the next scene and updates the progress bar with the current status of the load
+    /// </summary>
     async void AsyncLoadAsync()
     {
 
@@ -52,6 +60,9 @@ public class LoadManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Update. Gradually updates the bar size
+    /// </summary>
     void Update()
     {
 

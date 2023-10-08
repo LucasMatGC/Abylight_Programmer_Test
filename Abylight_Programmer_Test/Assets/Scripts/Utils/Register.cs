@@ -8,6 +8,9 @@ namespace Assets.Scripts.Utils
         string comment;
         int value;
 
+        /// <summary>
+        /// Register constructor
+        /// </summary>
         public Register(RegisterType type, string comment, int value)
         {
 
@@ -17,6 +20,9 @@ namespace Assets.Scripts.Utils
 
         }
 
+        /// <summary>
+        /// Prints the data from the Register
+        /// </summary>
         public string GetContent()
         {
             return type.ToString() + " [" + comment + "] " + value.ToString() + "\n";

@@ -6,16 +6,33 @@ using UnityEngine.Networking;
 using Assets.Scripts.Utils;
 using System;
 using Assets.Scripts.Data;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
+    
     [SerializeField]
     private TextMeshProUGUI downloadedText;
 
     public List<Register> registers = new List<Register>();
 
+    [SerializeField]
+    private Button exitButton;
+    [SerializeField]
+    private FlowManager _flowManager;
+
+    /// <summary>
+    /// Start. Ensures the exit button is properly linked
+    /// </summary>
+    void Start()
+    {
+        _flowManager = FlowManager._flowManager;
+        exitButton.onClick.AddListener(_flowManager.GotoInit);
+    }
+
+    /// <summary>
+    /// Downloads the data.
+    /// </summary>
     public void DownloadData()
     {
 
@@ -24,6 +41,9 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Sends the web request. If successful, saves the data and proceeds to manage the data
+    /// </summary>
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -51,6 +71,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reads the data from the persistent file and prints it in the text label
+    /// </summary>
     private void ManageData()
     {
 
@@ -98,13 +121,19 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Saves the data in a persistent file
+    /// </summary>
     private void SaveData(string data)
     {
 
-        SaveLoadSystem.SaveData(data);
+        SaveLoadSystem.SaveData(data, Constants.DownloadFileName);
 
     }
 
+    /// <summary>
+    /// Prints the data in the text label
+    /// </summary>
     private void PrintData()
     {
 
@@ -118,13 +147,6 @@ public class MenuManager : MonoBehaviour
         }
 
         downloadedText.text = data;
-
-    }
-
-    public void GotoInit()
-    {
-
-        FlowManager._flowManager.GotoInit();
 
     }
 }

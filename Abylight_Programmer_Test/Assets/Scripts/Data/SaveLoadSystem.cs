@@ -1,4 +1,3 @@
-using Assets.Scripts.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -10,11 +9,13 @@ namespace Assets.Scripts.Data
     public static class SaveLoadSystem
     {
 
-        //Saves the data in a persistent file
-        public static void SaveData(string newData)
+        /// <summary>
+        ///Saves the data in a persistent file
+        /// </summary>
+        public static void SaveData(string newData, string filename)
         {
 
-            string path = Application.persistentDataPath + "/" + Constants.DownloadFileName;
+            string path = Application.persistentDataPath + "/" + filename;
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
@@ -22,13 +23,15 @@ namespace Assets.Scripts.Data
                 formatter.Serialize(stream, newData);
                 stream.Close();
 
-                Debug.Log("File saved succesfully in route: " + Application.persistentDataPath + "/" + Constants.DownloadFileName);
+                Debug.Log("File saved succesfully in route: " + Application.persistentDataPath + "/" + filename);
             }
 
 
         }
 
-        //Loads the data from the game.
+        /// <summary>
+        ///Loads the data from the game.
+        /// OnEnable.
         public static string LoadData(string filename)
         {
 
@@ -43,7 +46,7 @@ namespace Assets.Scripts.Data
                     string data = formatter.Deserialize(stream) as string;
                     stream.Close();
 
-                    Debug.Log("File loaded succesfully from route: " + Application.persistentDataPath + "/" + Constants.DownloadFileName);
+                    Debug.Log("File loaded succesfully from route: " + Application.persistentDataPath + "/" + filename);
 
                     return data;
 
